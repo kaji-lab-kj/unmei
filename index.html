@@ -38,7 +38,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Kosugi+Maru&family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=15.1.2">
+<link rel="stylesheet" href="css/style.css?v=15.1.4">
 </head>
 <body>
 
@@ -60,8 +60,24 @@
 
       <div class="preview-chars" id="preview-chars"></div>
 
+      <!-- 機能訴求: 何が占えるか明示 -->
+      <div class="opening-features">
+        <div class="feature-row">
+          <span class="feature-icon">♡</span>
+          <span class="feature-text">MBTI × 干支 で 20種類 のキャラから あなたを 当てる</span>
+        </div>
+        <div class="feature-row">
+          <span class="feature-icon">✦</span>
+          <span class="feature-text">全国800万人 ランキング ・ 友達 との 相性 チェック</span>
+        </div>
+        <div class="feature-row">
+          <span class="feature-icon">★</span>
+          <span class="feature-text">出現率 <strong>1%</strong> の レアキャラ も ひそかに 待ってる</span>
+        </div>
+      </div>
+
       <button class="btn" onclick="goToScreen('birthdate')">運命をみる</button>
-      <div class="opening-meta">★ 1 6 ★ の キ ャ ラ ク タ ー</div>
+      <div class="opening-meta">★ 全 2 0 問 / 3 分 で 完 了 ★</div>
     </div>
   </div>
 
@@ -293,22 +309,22 @@
 
       <div class="result-attr-grid">
         <div class="attr-box">
-          <div class="attr-label">しるし</div>
+          <div class="attr-label">しるし<button class="info-btn" onclick="showInfo('zodiac')" aria-label="しるしの解説">?</button></div>
           <div class="attr-value" id="result-zodiac">辰</div>
         </div>
         <div class="attr-box">
-          <div class="attr-label">タイプ</div>
+          <div class="attr-label">タイプ<button class="info-btn" onclick="showInfo('mbti')" aria-label="タイプの解説">?</button></div>
           <div class="attr-value" id="result-mbti">INTJ</div>
         </div>
         <div class="attr-box">
-          <div class="attr-label">運命の色</div>
+          <div class="attr-label">運命の色<button class="info-btn" onclick="showInfo('color')" aria-label="運命の色の解説">?</button></div>
           <div class="attr-value color-dot">
             <span class="color-circle" id="result-color-dot"></span>
             <span id="result-color-name">ラベンダー</span>
           </div>
         </div>
         <div class="attr-box">
-          <div class="attr-label">きょうの運</div>
+          <div class="attr-label">きょうの運<button class="info-btn" onclick="showInfo('luck')" aria-label="きょうの運の解説">?</button></div>
           <div class="attr-value" id="result-luck">87</div>
         </div>
       </div>
@@ -317,7 +333,7 @@
     </div>
 
     <!-- ★ NEW: 7軸全国ランキング ★ -->
-    <div class="section-title">全 国 ラ ン キ ン グ</div>
+    <div class="section-title">全 国 ラ ン キ ン グ<button class="info-btn info-btn-inline" onclick="showInfo('ranking')" aria-label="ランキングの解説">?</button></div>
     <div class="ranking-card">
       <div class="ranking-sub">全国 8 0 0 万 人 中 の あなたの 順位</div>
       <div id="ranking-list"></div>
@@ -339,7 +355,7 @@
       <div class="card-text" id="result-charm"></div>
     </div>
 
-    <div class="section-title">鏡 う つ し の 子</div>
+    <div class="section-title">鏡 う つ し の 子<button class="info-btn info-btn-inline" onclick="showInfo('mirror')" aria-label="鏡うつしの解説">?</button></div>
     <div class="mirror-card">
       <div class="mirror-label">あなたと正反対の運命</div>
       <div class="mirror-char" id="mirror-char"></div>
@@ -349,11 +365,11 @@
 
     <div class="relation-grid">
       <div class="relation-card warning">
-        <div class="relation-label">⚠ ニガテな子</div>
+        <div class="relation-label">⚠ ニガテな子<button class="info-btn info-btn-light" onclick="showInfo('warning')" aria-label="ニガテな子の解説">?</button></div>
         <div class="relation-value" id="result-warning"></div>
       </div>
       <div class="relation-card soulmate">
-        <div class="relation-label">♡ うんめいの子</div>
+        <div class="relation-label">♡ うんめいの子<button class="info-btn info-btn-light" onclick="showInfo('soulmate')" aria-label="うんめいの子の解説">?</button></div>
         <div class="relation-value" id="result-soulmate"></div>
       </div>
     </div>
@@ -431,16 +447,27 @@
 
 <canvas id="share-canvas" width="1080" height="1920" style="display:none;"></canvas>
 
+<!-- 情報モーダル (各[?]ボタンから呼び出し) -->
+<div class="modal info-modal" id="info-modal" onclick="if(event.target.id==='info-modal')closeInfoModal()">
+  <div class="modal-content info-modal-inner">
+    <div class="info-modal-icon" id="info-modal-icon">♡</div>
+    <h3 class="info-modal-title" id="info-modal-title">タイトル</h3>
+    <div class="info-modal-body" id="info-modal-body">本文</div>
+    <button class="modal-close" onclick="closeInfoModal()">わかった ♡</button>
+  </div>
+</div>
+
 <!-- v15.1: モジュール分離 -->
-<script src="js/data.js?v=15.1.2"></script>
-<script src="js/rare.js?v=15.1.2"></script>
-<script src="js/compatibility.js?v=15.1.2"></script>
-<script src="js/ranking.js?v=15.1.2"></script>
-<script src="js/share_actions.js?v=15.1.2"></script>
-<script src="js/ranking_card.js?v=15.1.2"></script>
-<script src="js/flow.js?v=15.1.2"></script>
-<script src="js/share.js?v=15.1.2"></script>
-<script src="js/main.js?v=15.1.2"></script>
+<script src="js/data.js?v=15.1.4"></script>
+<script src="js/rare.js?v=15.1.4"></script>
+<script src="js/compatibility.js?v=15.1.4"></script>
+<script src="js/ranking.js?v=15.1.4"></script>
+<script src="js/share_actions.js?v=15.1.4"></script>
+<script src="js/ranking_card.js?v=15.1.4"></script>
+<script src="js/info_modal.js?v=15.1.4"></script>
+<script src="js/flow.js?v=15.1.4"></script>
+<script src="js/share.js?v=15.1.4"></script>
+<script src="js/main.js?v=15.1.4"></script>
 
 </body>
 </html>

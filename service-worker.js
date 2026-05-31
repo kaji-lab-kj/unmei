@@ -3,7 +3,7 @@
 // 戦略: App Shell + 画像を初回キャッシュ、以降は Cache First
 // ============================================
 
-const CACHE_VERSION = 'unmei-v15.1.3';
+const CACHE_VERSION = 'unmei-v15.1.4';
 const STATIC_CACHE  = `${CACHE_VERSION}-static`;
 const IMAGE_CACHE   = `${CACHE_VERSION}-images`;
 
@@ -12,16 +12,17 @@ const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
-  './css/style.css?v=15.1.2',
-  './js/data.js?v=15.1.2',
-  './js/rare.js?v=15.1.2',
-  './js/compatibility.js?v=15.1.2',
-  './js/ranking.js?v=15.1.2',
-  './js/share_actions.js?v=15.1.2',
-  './js/ranking_card.js?v=15.1.2',
-  './js/flow.js?v=15.1.2',
-  './js/share.js?v=15.1.2',
-  './js/main.js?v=15.1.2',
+  './css/style.css?v=15.1.4',
+  './js/data.js?v=15.1.4',
+  './js/rare.js?v=15.1.4',
+  './js/compatibility.js?v=15.1.4',
+  './js/ranking.js?v=15.1.4',
+  './js/share_actions.js?v=15.1.4',
+  './js/ranking_card.js?v=15.1.4',
+  './js/info_modal.js?v=15.1.4',
+  './js/flow.js?v=15.1.4',
+  './js/share.js?v=15.1.4',
+  './js/main.js?v=15.1.4',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './assets/icons/apple-touch-icon.png',
