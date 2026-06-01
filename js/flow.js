@@ -48,10 +48,12 @@ function validateAndProceed() {
 
   if (!year || !month || !day) {
     alert('うらないには、すべての日付が必要だよ！');
+    if (window.ev) ev('birthdate_validation_error');
     return;
   }
   if (month < 1 || month > 12 || day < 1 || day > 31) {
     alert('その日はないみたい…');
+    if (window.ev) ev('birthdate_validation_error');
     return;
   }
 
@@ -63,6 +65,10 @@ function validateAndProceed() {
   state.questionIndex = 0;
   state.answerHistory = [];
   state.mbti = { E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0 };
+
+  // GA: 占い開始
+  if (window.ev) ev('quiz_start', { zodiac: state.zodiac, year: year });
+
   goToScreen('question');
   renderQuestion();
 }
@@ -137,9 +143,14 @@ function answerQuestion(axis) {
   state.mbti[axis]++;
   state.answerHistory.push(axis);
   state.questionIndex++;
+  // GA: 5問ごとに進捗イベント
+  if (window.ev && state.questionIndex % 5 === 0) {
+    ev('quiz_progress', { question: state.questionIndex });
+  }
   if (state.questionIndex < QUESTIONS.length) {
     setTimeout(renderQuestion, 250);
   } else {
+    if (window.ev) ev('quiz_complete');
     goToScreen('ritual');
     runRitualAnimation();
   }
@@ -249,6 +260,19 @@ function showResult() {
 
   // v15.1: 7軸全国ランキング描画
   renderRankingSection(state);
+
+  // GA: 結果表示 (MBTI/zodiac/rare をディメンション化)
+  if (window.ev) {
+    ev('result_view', {
+      mbti: state.finalMBTI,
+      zodiac: state.zodiac,
+      rare_type: state.rareType ? state.rareType.id : 'normal',
+      is_rare: !!state.rareType
+    });
+    if (state.rareType) {
+      ev('rare_summon', { rare_type: state.rareType.id });
+    }
+  }
 
   if (state.rareType) {
     showRareSummon(state.rareType);

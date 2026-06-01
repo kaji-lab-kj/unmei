@@ -35,6 +35,7 @@ function setShareContext({ text, url, filename }) {
 // 1. Web Share API（モバイル優先）
 // =====================
 async function tryWebShare() {
+  if (window.ev) ev('share_attempt', { channel: 'web_share' });
   if (!navigator.share) {
     // 未対応の場合は画像DLにフォールバック
     downloadShareImage();
@@ -69,6 +70,7 @@ async function tryWebShare() {
 // 2. 画像ダウンロード
 // =====================
 function downloadShareImage() {
+  if (window.ev) ev('share_attempt', { channel: 'download' });
   const canvas = document.getElementById('share-canvas');
   const url = canvas.toDataURL('image/png');
   const a = document.createElement('a');
@@ -85,6 +87,7 @@ function downloadShareImage() {
 // 3. テキスト＋URL コピー
 // =====================
 async function copyShareText() {
+  if (window.ev) ev('share_attempt', { channel: 'copy' });
   const fullText = _currentShare.text + '\n' + _currentShare.url;
   if (navigator.clipboard && navigator.clipboard.writeText) {
     try {
@@ -115,6 +118,7 @@ async function copyShareText() {
 // 4. Twitter / X シェア
 // =====================
 function shareToTwitter() {
+  if (window.ev) ev('share_attempt', { channel: 'twitter' });
   const text = encodeURIComponent(_currentShare.text);
   const url = encodeURIComponent(_currentShare.url);
   const intent = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
@@ -126,6 +130,7 @@ function shareToTwitter() {
 // 5. LINE シェア
 // =====================
 function shareToLineImage() {
+  if (window.ev) ev('share_attempt', { channel: 'line' });
   const text = encodeURIComponent(_currentShare.text + ' ');
   const url = encodeURIComponent(_currentShare.url);
   const intent = `https://line.me/R/msg/text/?${text}${url}`;

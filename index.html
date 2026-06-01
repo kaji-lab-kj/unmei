@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>運命図鑑 ウンメイ</title>
 
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P0E2BDE2ET"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-P0E2BDE2ET', {
+    send_page_view: true,
+    anonymize_ip: true   // IP匿名化 (個人特定不可、プライバシー配慮)
+  });
+  // 短縮ヘルパー (ev関数で簡単にカスタムイベント送信)
+  window.ev = function(name, params) {
+    if (typeof gtag === 'function') gtag('event', name, params || {});
+  };
+</script>
+
 <!-- PWA Phase 1 -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ff6fb3">
@@ -38,7 +54,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Kosugi+Maru&family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=15.1.5">
+<link rel="stylesheet" href="css/style.css?v=15.1.6">
 </head>
 <body>
 
@@ -462,16 +478,16 @@
 </div>
 
 <!-- v15.1: モジュール分離 -->
-<script src="js/data.js?v=15.1.5"></script>
-<script src="js/rare.js?v=15.1.5"></script>
-<script src="js/compatibility.js?v=15.1.5"></script>
-<script src="js/ranking.js?v=15.1.5"></script>
-<script src="js/share_actions.js?v=15.1.5"></script>
-<script src="js/ranking_card.js?v=15.1.5"></script>
-<script src="js/info_modal.js?v=15.1.5"></script>
-<script src="js/flow.js?v=15.1.5"></script>
-<script src="js/share.js?v=15.1.5"></script>
-<script src="js/main.js?v=15.1.5"></script>
+<script src="js/data.js?v=15.1.6"></script>
+<script src="js/rare.js?v=15.1.6"></script>
+<script src="js/compatibility.js?v=15.1.6"></script>
+<script src="js/ranking.js?v=15.1.6"></script>
+<script src="js/share_actions.js?v=15.1.6"></script>
+<script src="js/ranking_card.js?v=15.1.6"></script>
+<script src="js/info_modal.js?v=15.1.6"></script>
+<script src="js/flow.js?v=15.1.6"></script>
+<script src="js/share.js?v=15.1.6"></script>
+<script src="js/main.js?v=15.1.6"></script>
 
 </body>
 </html>
