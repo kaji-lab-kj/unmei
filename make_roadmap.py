@@ -42,7 +42,7 @@ PHASES = [
         "color": (92, 184, 154), "bg": (240, 255, 248),
         "goal": "ローンチ準備 整える",
         "todos": [
-            "✓ サイト本番デプロイ済 (https://kaji-lab-kj.github.io/unmei/)",
+            "✓ サイト本番デプロイ済 (https://gfd-creators.github.io/unmei/)",
             "✓ GA4 設置済 (リアルタイムで動作確認)",
             "✓ OGP・PWA 対応済",
             "□ 自分のスマホで占い 1周 → ホーム画面追加体験",
