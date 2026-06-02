@@ -158,14 +158,14 @@ function answerQuestion(axis) {
 }
 
 // 色名を文字数に応じてフォントサイズ調整しつつセット
+// 縦並びレイアウトで横幅フル使えるため緩和: 11+ で 12px、9+ で 13px
 function setColorName(name) {
   const el = document.getElementById('result-color-name');
   el.textContent = name;
-  // 7文字以下=13px(デフォルト)、8-9=11px、10以上=10px
   const len = (name || '').length;
-  if (len >= 10)      el.style.fontSize = '10px';
-  else if (len >= 8)  el.style.fontSize = '11px';
-  else                el.style.fontSize = '13px';
+  if (len >= 11)      el.style.fontSize = '12px';
+  else if (len >= 9)  el.style.fontSize = '13px';
+  else                el.style.fontSize = '14px';
 }
 
 function goBackQuestion() {

@@ -988,30 +988,36 @@ body {
   text-overflow: ellipsis;
 }
 
+/* 色名は縦並び (円 上 / テキスト 下) で横幅をフル活用 → どんな長さでも溢れない */
 .attr-value.color-dot {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 4px;
   font-size: 13px;
-  flex-wrap: nowrap;
   min-width: 0;
-  line-height: 1.2;
-  padding: 0 2px;
-  white-space: normal;          /* 親.attr-valueのnowrapを解除 */
-  overflow: visible;            /* 切り詰めず表示 */
+  line-height: 1.25;
+  padding: 0;
+  white-space: normal;
+  overflow: visible;
+}
+
+.attr-value.color-dot .color-circle {
+  flex-shrink: 0;
 }
 
 .attr-value.color-dot span:last-child {
-  /* 長い色名でも折返し可能 — JS側で文字数に応じてフォントサイズも調整 */
+  /* 円の下にテキスト、横幅フル使用、必要なら2行折返し */
   white-space: normal;
   word-break: break-all;
   overflow-wrap: anywhere;
   min-width: 0;
-  flex: 1 1 auto;
+  width: 100%;
   overflow: visible;
   text-overflow: clip;
   text-align: center;
+  font-size: 12px;
 }
 
 /* attr-box は高さ自動調整、内容溢れ防止 */
