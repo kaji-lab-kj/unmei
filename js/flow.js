@@ -84,29 +84,26 @@ function validateAndProceed() {
   renderQuestion();
 }
 
-// 質問数別の励まし文言 (key = 質問番号、1-based)
-const CHEER_MESSAGES = {
-  1:  { text: '♡ Q U E S T I O N ♡',         milestone: false },
-  3:  { text: '★ 順調！ この調子 ♡',           milestone: false },
-  5:  { text: '✦ 1/4 達成 ★ いい感じ ♡',       milestone: true  },
-  7:  { text: '♡ ノってきた！ ★',              milestone: false },
-  10: { text: '★ 半分まで きた！ ♡♡',         milestone: true  },
-  13: { text: '✦ ラスト 3 / 8 問 ♡',          milestone: false },
-  15: { text: '♡ ラストスパート ★ もう少し！',  milestone: true  },
-  18: { text: '★ 残り 3問！ がんばれ ♡',       milestone: false },
-  20: { text: '♡ ラスト 1問 ♡♡♡',             milestone: true  },
-};
+// 質問数別の励まし文言
+// 「残り○問」は固定値ではなく、実際の質問数から毎問リアルタイムに算出する
+// （旧実装は閾値ごとの固定テキストで、質問数とズレて表示されるバグがあった）
+function getCheer(qNum, totalQ) {
+  const remaining = totalQ - qNum + 1; // 今表示中の問題を含む残り問題数
+  if (qNum === 1)    return { text: '♡ Q U E S T I O N ♡',         milestone: false };
+  if (qNum < 5)      return { text: '★ 順調！ この調子 ♡',           milestone: false };
+  if (qNum === 5)    return { text: '✦ 1/4 達成 ★ いい感じ ♡',       milestone: true  };
+  if (qNum < 10)     return { text: '♡ ノってきた！ ★',              milestone: false };
+  if (qNum === 10)   return { text: '★ 半分まで きた！ ♡♡',         milestone: true  };
+  if (qNum < 15)     return { text: `✦ のこり ${remaining}問 ♡`,     milestone: false };
+  if (qNum === 15)   return { text: '♡ ラストスパート ★ もう少し！',  milestone: true  };
+  if (remaining > 1) return { text: `★ 残り ${remaining}問！ がんばれ ♡`, milestone: false };
+  return { text: '♡ ラスト 1問 ♡♡♡', milestone: true };
+}
 
 function updateCheer(qIndex) {
   // qIndex は 0-based 状態のインデックス、表示は 1-based
   const qNum = qIndex + 1;
-  // 直近の閾値メッセージを採用
-  const keys = Object.keys(CHEER_MESSAGES).map(Number).sort((a,b)=>a-b);
-  let chosen = keys[0];
-  for (const k of keys) {
-    if (qNum >= k) chosen = k;
-  }
-  const cheer = CHEER_MESSAGES[chosen];
+  const cheer = getCheer(qNum, QUESTIONS.length);
   const el = document.getElementById('progress-cheer');
   if (!el) return;
   el.textContent = cheer.text;

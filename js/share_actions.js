@@ -66,13 +66,42 @@ async function tryWebShare() {
   }
 }
 
+// iOS判定（iPadOS13+のMac偽装UAも考慮）
+function isIOSDevice() {
+  return /iP(hone|ad|od)/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
 // =====================
-// 2. 画像ダウンロード
+// 2. 画像保存
+// iOS Safari は <a download> を無視するため、画像付きWeb Shareで
+// 「写真に保存 / Instagram送信」へ誘導する。PC/Androidは通常DL。
 // =====================
-function downloadShareImage() {
+async function downloadShareImage() {
   if (window.ev) ev('share_attempt', { channel: 'download' });
   const canvas = document.getElementById('share-canvas');
-  const url = canvas.toDataURL('image/png');
+  const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+  const file = new File([blob], _currentShare.filename, { type: 'image/png' });
+
+  // --- iPhone / iPad ---
+  if (isIOSDevice()) {
+    // 画像付き共有シート（→「画像を保存」でカメラロール、Instagram等にも直接送れる）
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: '運命図鑑 ウンメイ' });
+        return;
+      } catch (e) {
+        if (e.name === 'AbortError') return; // 閉じただけ
+        // 失敗時は長押し保存の案内へ
+      }
+    }
+    // 共有不可の古いiOS → プレビュー画像を長押し保存させる
+    showShareToast('画像を長押し →「"写真"に追加」で保存できるよ ♡');
+    return;
+  }
+
+  // --- PC / Android: 通常ダウンロード（blob URL）---
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = _currentShare.filename;
@@ -80,6 +109,7 @@ function downloadShareImage() {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
   showShareToast('画像を保存しました ♡');
 }
 
