@@ -34,7 +34,11 @@ window.UNMEI_MONETIZE = {
       // ② ココナラ 電話占い（¥16,000 / EPC50）
       `<a href="https://px.a8.net/svt/ejp?a8mat=4B5N49+H9LBM+2PEO+C4LLD" rel="nofollow">
 <img border="0" width="300" height="250" alt="ココナラ 電話占い" src="https://www24.a8.net/svt/bgt?aid=260603721029&wid=001&eno=01&mid=s00000012624002037000&mc=1"></a>
-<img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4B5N49+H9LBM+2PEO+C4LLD" alt="">`
+<img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4B5N49+H9LBM+2PEO+C4LLD" alt="">`,
+      // ③ オーキッドビューティー（美容・女性向け / 購入20%）
+      `<a href="https://px.a8.net/svt/ejp?a8mat=4B5N49+16V8C2+5NU2+5ZEMP" rel="nofollow">
+<img border="0" width="300" height="250" alt="オーキッドビューティー スキンケア" src="https://www24.a8.net/svt/bgt?aid=260603721072&wid=001&eno=01&mid=s00000026417001005000&mc=1"></a>
+<img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=4B5N49+16V8C2+5NU2+5ZEMP" alt="">`
     ],
     html: ''                        // ← 単発で貼りたい時はこちらでも可（items優先）
   }
